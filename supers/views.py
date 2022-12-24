@@ -7,9 +7,22 @@ from .models import Super
 
 @api_view(['GET', 'POST'])
 def supers_list(request):
+
     if request.method == 'GET':
-        supers = Super.objects.all()
-        serializer = SuperSerializer(supers, many=True)
+
+        super_type = request.query_params.get('super_type')
+        print(super_type)
+
+        super_types = Super.objects.all()
+            
+
+        if super_type:
+            super_types = super_types.filter(super_type__type = super_type)
+
+
+
+
+        serializer = SuperSerializer(super_types, many=True)
         return Response(serializer.data)
 
         
