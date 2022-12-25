@@ -18,5 +18,6 @@ from django.urls import path, include
 from supers import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/supers/', views.heroes_and_villains),
+    path('api/supers/', views.supers_list),
+    path('api/supers/<int:pk>/', views.supers_detail),
 ]

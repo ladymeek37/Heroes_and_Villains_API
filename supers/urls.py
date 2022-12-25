@@ -6,4 +6,5 @@ urlpatterns = [
     path('<int:pk>/', views.supers_detail),
     path('api/supers/', views.heroes_and_villains),
     
+    
 ]
