@@ -9,18 +9,12 @@ from .models import Super
 def supers_list(request):
 
     if request.method == 'GET':
-
         super_type = request.query_params.get('super_type')
         print(super_type)
-
         super_types = Super.objects.all()
             
-
         if super_type:
             super_types = super_types.filter(super_type__type = super_type)
-
-
-
 
         serializer = SuperSerializer(super_types, many=True)
         return Response(serializer.data)
@@ -32,6 +26,21 @@ def supers_list(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+@api_view(['GET'])
+def heroes_and_villains(request):
+
+    heroes = Super.objects.filter(super_type=1)
+    villains = Super.objects.filter(super_type=2)
+
+    heroes_serializer = SuperSerializer(heroes, many = True)
+    villains_serializer = SuperSerializer(villains, many = True)
+
+    custom_response_dict = {
+        'heroes:' : heroes_serializer.data,
+        'villains' : villains_serializer.data
+    }
+
+    return Response(custom_response_dict)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
